@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Monbsoft.UpdateVersion.Core;
+using Monbsoft.UpdateVersion.Models;
 using System.CommandLine;
 using System.CommandLine.Invocation;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Monbsoft.UpdateVersion.Commands
 {
@@ -15,18 +12,14 @@ namespace Monbsoft.UpdateVersion.Commands
         {
             var command = new Command("list", "Lists all project versions");
 
-
             command.Handler = CommandHandler.Create<ShowCommandArguments>(args =>
             {
-                var context = new CommandContext
+                var context = new CommandContext(args.Console, args.Verbosity)
                 {
-                    Directory = Directory.GetCurrentDirectory(),
-                    Console = args.Console
+                    Directory = Directory.GetCurrentDirectory()
                 };
                 var command = new ListCommand();
                 command.Execute(context);
-
-                
             });
 
             return command;
@@ -34,25 +27,19 @@ namespace Monbsoft.UpdateVersion.Commands
 
         public void Execute(CommandContext context)
         {
-            var finder = new FileFinder();
-            var projectFiles = finder.FindProjects(context.Directory);
+            var finder = new ProjectFinder(context.Directory);
+            var projectFiles = finder.FindProjects();
 
-            foreach(var projectFile in projectFiles)
+            foreach (var projectFile in projectFiles)
             {
-                context.Console.Out.Wire
             }
-            
-            
         }
 
         private class ShowCommandArguments
         {
             public IConsole Console { get; set; } = default;
             public FileInfo Path { get; set; } = default;
-
-            public Verbosity MyProperty { get; set; }
+            public Verbosity Verbosity { get; set; } = Verbosity.Info;
         }
     }
-
-
 }
