@@ -29,6 +29,7 @@ namespace Monbsoft.UpdateVersion.Commands
             {
                 var project = _store.Read(projectFile);
                 UpdateProject(project, changeVersion);
+                _store.Save(project);
             }
             return projectFiles.Count;
         }

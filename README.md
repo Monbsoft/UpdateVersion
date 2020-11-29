@@ -7,7 +7,7 @@ Update-Version is a developper tool to update the .Net project versions.
 Install UpdateVersion via the following command:
 
 ```text
-    dotnet tool install -g Monbsoft.UpdateVersion
+$ dotnet tool install -g Monbsoft.UpdateVersion
 ```
 
 ## How To Use
@@ -27,4 +27,14 @@ Options:
 
 Commands:
   list    Lists all project versions
+```
+
+## Usage
+
+### Major version update
+
+Update major versions via the following command:
+
+```text
+$ UpdateVersion major
 ```

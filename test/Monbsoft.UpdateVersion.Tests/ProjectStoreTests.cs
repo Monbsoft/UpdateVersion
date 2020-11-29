@@ -10,16 +10,6 @@ namespace Monbsoft.UpdateVersion.Tests
 {
     public class ProjectStoreTests
     {
-        private const string ProjectTemplate = @"<Project Sdk=""Microsoft.NET.Sdk"">
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFrameworks>net5.0</TargetFrameworks>
-    {0}
-  </PropertyGroup>
-  <ItemGroup>
-    <Compile Include=""**\*.cs"" Exclude=""Excluded.cs;$(DefaultItemExcludes)"" />
-  </ItemGroup>
-</Project>";
 
         [Fact]
         public void ReadNoVersionTest()
@@ -27,7 +17,7 @@ namespace Monbsoft.UpdateVersion.Tests
             string projectFile = "project2.csproj";
             using (var fs = new DisposableFileSystem())
             {
-                fs.CreateFile(projectFile, string.Format(ProjectTemplate, string.Empty));
+                fs.CreateFile(projectFile, ProjectHelper.BuildVersion(string.Empty));
                 var store = new ProjectStore();
 
                 var project = store.Read(CreateFileInfo(fs, projectFile));
@@ -42,7 +32,7 @@ namespace Monbsoft.UpdateVersion.Tests
             string projectFile = "project1.csproj";
             using (var fs = new DisposableFileSystem())
             {
-                fs.CreateFile(projectFile, string.Format(ProjectTemplate, "<Version>0.5</Version>"));
+                fs.CreateFile(projectFile, ProjectHelper.BuildVersion("0.5"));
                 var store = new ProjectStore();
 
                 var project = store.Read(CreateFileInfo(fs, projectFile));
@@ -57,7 +47,7 @@ namespace Monbsoft.UpdateVersion.Tests
             string projectFile = "MyProject.csproj";
             using (var fs = new DisposableFileSystem())
             {
-                fs.CreateFile(projectFile, string.Format(ProjectTemplate, "<Version>1.3.5</Version>"));
+                fs.CreateFile(projectFile, ProjectHelper.BuildVersion("1.3.5"));
                 var store = new ProjectStore();
 
                 var project = store.Read(CreateFileInfo(fs, projectFile));
@@ -73,12 +63,12 @@ namespace Monbsoft.UpdateVersion.Tests
 
             using (var fs = new DisposableFileSystem())
             {
-                fs.CreateFile(projectFile, string.Format(ProjectTemplate, "<Version>1.4.0</Version>"));
+                fs.CreateFile(projectFile, ProjectHelper.BuildVersion("1.4.0"));
                 var store = new ProjectStore();
                 var project = store.Read(CreateFileInfo(fs, projectFile));
                 project.Version = "2.0";
 
-                store.Update(project);
+                store.Save(project);
                 var newProject = store.Read(CreateFileInfo(fs, projectFile));
 
                 Assert.Equal("2.0", project.Version);
@@ -92,12 +82,12 @@ namespace Monbsoft.UpdateVersion.Tests
 
             using (var fs = new DisposableFileSystem())
             {
-                fs.CreateFile(projectFile, string.Format(ProjectTemplate, "<Version>1.4.0</Version>"));
+                fs.CreateFile(projectFile, ProjectHelper.BuildVersion("1.4.0"));
                 var store = new ProjectStore();
                 var project = store.Read(CreateFileInfo(fs, projectFile));
                 project.Version = "${BuildVersion}";
 
-                Assert.Throws<ArgumentException>("version", () => store.Update(project));
+                Assert.Throws<ArgumentException>("version", () => store.Save(project));
             }
         }
 

@@ -35,7 +35,7 @@ namespace Monbsoft.UpdateVersion.Core
             return project;
         }
 
-        public void Update(Project project)
+        public void Save(Project project)
         {
             var projectDocument = ReadProject(project.File);
             var versionElement = ReadVersionElement(projectDocument);
