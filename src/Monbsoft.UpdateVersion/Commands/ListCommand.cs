@@ -12,7 +12,7 @@ namespace Monbsoft.UpdateVersion.Commands
         {
             var command = new Command("list", "Lists all project versions");
 
-            command.Handler = CommandHandler.Create<ShowCommandArguments>(args =>
+            command.Handler = CommandHandler.Create<ListCommandArguments>(args =>
             {
                 var context = new CommandContext(args.Console, args.Verbosity)
                 {
@@ -27,7 +27,7 @@ namespace Monbsoft.UpdateVersion.Commands
 
         public void Execute(CommandContext context)
         {
-            var reader = new ProjectReader();
+            var reader = new ProjectStore();
             var finder = new ProjectFinder(context.Directory);
             var projectFiles = finder.FindProjects();
 
@@ -38,7 +38,7 @@ namespace Monbsoft.UpdateVersion.Commands
             }
         }
 
-        private class ShowCommandArguments
+        private class ListCommandArguments
         {
             public IConsole Console { get; set; } = default;
             public FileInfo Path { get; set; } = default;

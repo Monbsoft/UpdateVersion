@@ -19,6 +19,9 @@ namespace Monbsoft.UpdateVersion
                 Description = "Developper tool to update the Visual Studio project versions."
             };
             command.AddCommand(ListCommand.Create());
+            command.AddCommand(MajorCommand.Create());
+            command.AddCommand(MinorCommand.Create());
+            command.AddCommand(PatchCommand.Create());
 
             var builder = new CommandLineBuilder(command)
                 .UseHelp()
