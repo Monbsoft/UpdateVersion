@@ -27,11 +27,14 @@ namespace Monbsoft.UpdateVersion.Commands
 
         public void Execute(CommandContext context)
         {
+            var reader = new ProjectReader();
             var finder = new ProjectFinder(context.Directory);
             var projectFiles = finder.FindProjects();
 
             foreach (var projectFile in projectFiles)
             {
+                var project = reader.Read(projectFile);
+                context.WriteInfo($"\t{project.Name} -> {project.Version}");
             }
         }
 

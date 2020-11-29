@@ -1,18 +1,15 @@
-﻿using Microsoft.Extensions.FileProviders.Physical;
-using Monbsoft.UpdateVersion.Core;
-using System;
-using System.Collections.Generic;
+﻿using Monbsoft.UpdateVersion.Core;
+using Monbsoft.UpdateVersion.Tests.Utilities;
 using System.IO;
 using System.Linq;
-using System.Text;
 using Xunit;
 
-namespace Monbsoft.UpdateVersion.Tests.Utilities
+namespace Monbsoft.UpdateVersion.Tests
 {
     public class FileFinderTests
     {
         [Fact]
-        public void FindWithSolution()
+        public void FindWithSolutionFile()
         {
             using(var fs = new DisposableFileSystem())
             {
@@ -32,7 +29,24 @@ namespace Monbsoft.UpdateVersion.Tests.Utilities
         }
 
         [Fact]
-        void FindWithNoProjectOrSolution()
+        public void FindWithProjectFiles()
+        {
+            using(var fs = new DisposableFileSystem())
+            {
+                fs.CreateFile("project1.csproj")
+                    .CreateFile("project2.csproj");
+                var finder = new ProjectFinder(fs.RootPath);
+
+                var projects = finder.FindProjects();
+
+                Assert.Equal("project1.csproj", projects[0].Name);
+                Assert.Equal("project2.csproj", projects[1].Name);
+
+            }
+        }
+
+        [Fact]
+        public void FindWithNoProjectOrSolution()
         {
             using(var fs = new DisposableFileSystem())
             {

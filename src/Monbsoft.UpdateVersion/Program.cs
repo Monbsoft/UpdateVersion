@@ -20,13 +20,9 @@ namespace Monbsoft.UpdateVersion
             };
             command.AddCommand(ListCommand.Create());
 
-            command.Handler = CommandHandler.Create<IHelpBuilder>(help =>
-            {
-                return 1;
-            });
-
             var builder = new CommandLineBuilder(command)
                 .UseHelp()
+                .UseDefaults()
                 .UseVersionOption()
                 .CancelOnProcessTermination()
                 .UseExceptionHandler();

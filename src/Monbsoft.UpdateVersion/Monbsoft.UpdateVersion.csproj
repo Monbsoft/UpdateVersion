@@ -3,10 +3,17 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>Monbsoft.UpdateVersion</RootNamespace>
+    <AssemblyName>UpdateVersion</AssemblyName>
+    <Version>0.1.0</Version>    
+    <PackageId>Monbsoft.UpdateVersion</PackageId>
+    <ToolCommandName>updateVersion</ToolCommandName>
+    <PackAsTool>true</PackAsTool>        
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.FileProviders.Physical" Version="5.0.0" />
+    <PackageReference Include="semver" Version="2.0.6" />
     <PackageReference Include="System.CommandLine" Version="2.0.0-beta1.20371.2" />
   </ItemGroup>
 

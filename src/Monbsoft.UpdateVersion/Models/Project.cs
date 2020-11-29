@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
+using System.Xml.XPath;
 
 namespace Monbsoft.UpdateVersion.Models
 {
@@ -11,7 +13,7 @@ namespace Monbsoft.UpdateVersion.Models
     {
         public Project(IFileInfo file)
         {
-            File = file;
+            File = file ?? throw new ArgumentNullException(nameof(file));
         }
        
         public IFileInfo File { get; }
@@ -21,5 +23,11 @@ namespace Monbsoft.UpdateVersion.Models
         public string Name => File.Name;
 
         public string Version { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
+
     }
 }
