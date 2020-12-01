@@ -1,15 +1,20 @@
 ﻿using Monbsoft.UpdateVersion.Core;
+using System;
+using System.Collections.Generic;
 using System.CommandLine;
 using System.CommandLine.Invocation;
 using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Monbsoft.UpdateVersion.Commands
 {
-    public class MajorCommand : VersionCommandBase
+    public class BuildCommand : VersionCommandBase
     {
         public static Command Create()
         {
-            var command = new Command("major", "Increments major version number");
+            var command = new Command("build", "Increment build version number");
 
             command.Handler = CommandHandler.Create<VersionCommandArguments>(args =>
             {
@@ -17,7 +22,7 @@ namespace Monbsoft.UpdateVersion.Commands
                 {
                     Directory = Directory.GetCurrentDirectory()
                 };
-                var command = new MajorCommand();
+                var command = new PatchCommand();
                 command.Execute(context);
             });
 
@@ -28,9 +33,14 @@ namespace Monbsoft.UpdateVersion.Commands
         {
             int count = Update(context, (oldVersion) =>
             {
-                return oldVersion.Change(major: oldVersion.Major + 1, 0, 0);
+                string build = "";
+                if(int.TryParse(oldVersion.Build, out int buildNumber))
+                {
+                    build = (buildNumber + 1).ToString();
+                }
+                return oldVersion.Change(build: oldVersion.Build + 1);
             });
-            context.WriteInfo($"{count} major versions are updated.");
+            context.WriteInfo($"{count} build versions are updated.");
         }
     }
 }

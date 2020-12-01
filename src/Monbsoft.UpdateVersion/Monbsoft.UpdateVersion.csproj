@@ -4,7 +4,7 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>Monbsoft.UpdateVersion</RootNamespace>
-    <AssemblyName>UpdateVersion</AssemblyName>
+    <AssemblyName>update-version</AssemblyName>
     <Version>0.1.0</Version>    
     <PackageId>Monbsoft.UpdateVersion</PackageId>
     <IsPackable>true</IsPackable>

@@ -9,7 +9,7 @@ namespace Monbsoft.UpdateVersion.Commands
     {
         public static Command Create()
         {
-            var command = new Command("minor", "Increment minor version number");
+            var command = new Command("minor", "Increments minor version number");
 
             command.Handler = CommandHandler.Create<VersionCommandArguments>(args =>
             {

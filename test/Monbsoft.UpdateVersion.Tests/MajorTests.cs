@@ -14,16 +14,6 @@ namespace Monbsoft.UpdateVersion.Tests
 {
     public class MajorTests
     {
-        private const string ProjectTemplate = @"<Project Sdk=""Microsoft.NET.Sdk"">
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFrameworks>net5.0</TargetFrameworks>
-    {0}
-  </PropertyGroup>
-  <ItemGroup>
-    <Compile Include=""**\*.cs"" Exclude=""Excluded.cs;$(DefaultItemExcludes)"" />
-  </ItemGroup>
-</Project>";
         private TestConsole _console;
 
         public MajorTests()
