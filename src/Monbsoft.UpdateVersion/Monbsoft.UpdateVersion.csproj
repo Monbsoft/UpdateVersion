@@ -9,7 +9,13 @@
     <PackageId>Monbsoft.UpdateVersion</PackageId>
     <IsPackable>true</IsPackable>
     <PackAsTool>true</PackAsTool>  
-    <ToolCommandName>updateVersion</ToolCommandName>      
+    <ToolCommandName>updateVersion</ToolCommandName>  
+    <Authors>Monbsoft.com</Authors>  
+    <Company>Monbsoft.com</Company>  
+    <Description>Update-Version is a developper tool to update the Visual Studio project versions.</Description>  
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>  
+    <PackageProjectUrl>https://github.com/Monbsoft/UpdateVersion</PackageProjectUrl>  
+    <RepositoryUrl>https://github.com/Monbsoft/UpdateVersion</RepositoryUrl>      
   </PropertyGroup>
 
   <ItemGroup>
