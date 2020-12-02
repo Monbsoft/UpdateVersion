@@ -31,16 +31,6 @@ namespace Monbsoft.UpdateVersion.Commands
 
         public void Execute(CommandContext context)
         {
-            int count = Update(context, (oldVersion) =>
-            {
-                string build = "";
-                if(int.TryParse(oldVersion.Build, out int buildNumber))
-                {
-                    build = (buildNumber + 1).ToString();
-                }
-                return oldVersion.Change(build: oldVersion.Build + 1);
-            });
-            context.WriteInfo($"{count} build versions are updated.");
         }
     }
 }

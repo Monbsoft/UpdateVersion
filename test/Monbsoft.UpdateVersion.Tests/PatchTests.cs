@@ -6,32 +6,32 @@ using Xunit;
 
 namespace Monbsoft.UpdateVersion.Tests
 {
-    public class MajorTests
+    public class MinorTests
     {
         private TestConsole _console;
 
-        public MajorTests()
+        public MinorTests()
         {
             _console = new TestConsole();
         }
 
         [Fact]
-        public void ChangeMajorVersionTest()
+        public void ChangeMinorVersionTest()
         {
-            using(var fs = new DisposableFileSystem())
+            using (var fs = new DisposableFileSystem())
             {
                 fs.CreateFile("MySolution.sln");
                 fs.CreateFolder("src/Services");
                 fs.CreateFile("src/Services/project1.csproj", ProjectHelper.BuildVersion("1.5.1"));
                 var store = new ProjectStore();
-                var command = new MajorCommand();
+                var command = new MinorCommand();
                 var context = new CommandContext(_console, Verbosity.Info);
                 context.Directory = fs.RootPath;
 
                 command.Execute(context);
-                var project  = store.Read(PathHelper.GetFile(fs, "src/Services/project1.csproj"));
+                var project = store.Read(PathHelper.GetFile(fs, "src/Services/project1.csproj"));
 
-                Assert.Equal("2.0.0", project.Version);
+                Assert.Equal("1.6.0", project.Version);
 
             }
         }
