@@ -45,6 +45,6 @@ $ UpdateVersion major
 
 ## Credit
 
-- José M. Alarcón, [jmalarcon / DotNetVersions](https://github.com/jmalarcon/DotNetVersions), DotNetVersions: Command line tool that shows the currently installed "classic" .NET versions in your system.
-- David Fallah, [TAGC / dotnet-setversion](https://github.com/TAGC/dotnet-setversion), dotnet-setversion: .NET Core CLI tool to update the version information in .NET Core \*.csproj files.
-- [dotnet / tye](https://github.com/dotnet/tye),Tye is a tool that makes developing, testing, and deploying microservices and distributed applications easier. Project Tye includes a local orchestrator to make developing microservices easier and the ability to deploy microservices to Kubernetes with minimal configuration.
+- Jon Grythe Stødle, [[jonstodle / DotnetVersion](https://github.com/jonstodle/DotnetVersion)], DotnetVersion : A simple tool to update the version number of your project. If you know of "yarn version", this is that for NET.
+- David Fallah,[[TAGC / dotnet-setversion](https://github.com/TAGC/dotnet-setversion)], dotnet-setversion: .NET Core CLI tool to update the version information in .NET Core \*.csproj files.
+- [[dotnet / tye](https://github.com/dotnet/tye)], Tye is a tool that makes developing, testing, and deploying microservices and distributed applications easier. Project Tye includes a local orchestrator to make developing microservices easier and the ability to deploy microservices to Kubernetes with minimal configuration.
