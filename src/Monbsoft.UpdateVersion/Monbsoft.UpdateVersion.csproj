@@ -5,7 +5,7 @@
     <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>Monbsoft.UpdateVersion</RootNamespace>
     <AssemblyName>update-version</AssemblyName>
-    <Version>0.1.1</Version>    
+    <Version>0.1.2</Version>    
     <PackageId>Monbsoft.UpdateVersion</PackageId>
     <IsPackable>true</IsPackable>
     <PackAsTool>true</PackAsTool>  
