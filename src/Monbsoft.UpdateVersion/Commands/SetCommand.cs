@@ -5,6 +5,7 @@ using System;
 using System.CommandLine;
 using System.CommandLine.Invocation;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace Monbsoft.UpdateVersion.Commands
 {
@@ -18,23 +19,31 @@ namespace Monbsoft.UpdateVersion.Commands
             versionArg.Description = "Version of the projects";
             command.AddArgument(versionArg);
 
-            command.Handler = CommandHandler.Create<SetCommandArguments>(args =>
+            command.Handler = CommandHandler.Create<SetCommandArguments>(async args =>
             {
                 var context = new CommandContext(args.Console, args.Verbosity)
                 {
                     Directory = Directory.GetCurrentDirectory()
                 };
                 var command = new SetCommand();
-                command.Execute(context, args.Version);
+                await command.ExecuteAsync(context, args.Version);
             });
 
             return command;
         }
 
-        public void Execute(CommandContext context, string version)
+        /// <summary>
+        /// Executes the set command
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="version"></param>
+        public async Task ExecuteAsync(CommandContext context, string version)
         {
+            if (string.IsNullOrEmpty(version))
+                throw new ArgumentNullException(nameof(version));
+
             var newVersion = SemVersion.Parse(version);
-            int count = Update(context, (oldVersion) =>
+            int count = await UpdateAsync(context, (oldVersion) =>
             {
                 return newVersion;
             });

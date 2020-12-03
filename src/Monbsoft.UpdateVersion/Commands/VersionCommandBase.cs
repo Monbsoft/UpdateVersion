@@ -3,6 +3,7 @@ using Monbsoft.UpdateVersion.Models;
 using Semver;
 using System;
 using System.CommandLine;
+using System.Threading.Tasks;
 
 namespace Monbsoft.UpdateVersion.Commands
 {
@@ -38,7 +39,24 @@ namespace Monbsoft.UpdateVersion.Commands
             return command;
         }
 
-        protected int Update(CommandContext context, Func<SemVersion, SemVersion> changeVersion)
+        protected async Task CommitAsync(string message)
+        {
+            if (string.IsNullOrEmpty(message))
+                return;
+
+            if (!await GitUtils.IsInstalled())
+                throw new InvalidOperationException("Unable to commit because git is not installed.");
+
+            await GitUtils.RunCommandAsync($"commit -am \"{message}\"");
+        }
+
+        /// <summary>
+        /// Updates the versions of the projects.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="changeVersion"></param>
+        /// <returns></returns>
+        protected async Task<int> UpdateAsync(CommandContext context, Func<SemVersion, SemVersion> changeVersion)
         {
             var finder = new ProjectFinder(context.Directory);
             var projectFiles = finder.FindProjects();
@@ -48,9 +66,17 @@ namespace Monbsoft.UpdateVersion.Commands
                 UpdateProject(project, changeVersion);
                 _store.Save(project);
             }
+
+            await CommitAsync(context.Message);
+
             return projectFiles.Count;
         }
 
+        /// <summary>
+        /// Updates the version of the project.
+        /// </summary>
+        /// <param name="project"></param>
+        /// <param name="changeVersion"></param>
         protected void UpdateProject(Project project, Func<SemVersion, SemVersion> changeVersion)
         {
             var oldVersion = SemVersion.Parse(project.Version);

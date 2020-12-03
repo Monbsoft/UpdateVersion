@@ -1,36 +1,43 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.CommandLine.Invocation;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Monbsoft.UpdateVersion.Core
 {
     public static class GitUtils
     {
-
-        public static async Task<bool> Commit(string message)
+        /// <summary>
+        /// Determines if git is installed.
+        /// </summary>
+        /// <returns></returns>
+        public static async Task<bool> IsInstalled()
         {
             try
             {
-                var result = await Process.ExecuteAsync("git", $"commit -am \"{message}\"");
+                var result = await Process.ExecuteAsync("git", "--version");
                 return result == 0;
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return false;
             }
         }
-
-        public static async Task<bool> IsInstalled(string workingDir)
+        /// <summary>
+        /// Runs the git command.
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        public static async Task<bool> RunCommandAsync(string args)
         {
+            if (string.IsNullOrEmpty(args))
+                throw new ArgumentNullException(nameof(args));
+
             try
             {
-                var result = await Process.ExecuteAsync("git", "--version", workingDir: workingDir);
+                var result = await Process.ExecuteAsync("git", args);
                 return result == 0;
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return false;
             }

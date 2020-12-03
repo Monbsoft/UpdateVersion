@@ -2,6 +2,7 @@
 using Monbsoft.UpdateVersion.Core;
 using Monbsoft.UpdateVersion.Models;
 using Monbsoft.UpdateVersion.Tests.Utilities;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Monbsoft.UpdateVersion.Tests
@@ -16,7 +17,7 @@ namespace Monbsoft.UpdateVersion.Tests
         }
 
         [Fact]
-        public void ChangePatchVersionTest()
+        public async Task ChangePatchVersionTest()
         {
             using (var fs = new DisposableFileSystem())
             {
@@ -28,7 +29,7 @@ namespace Monbsoft.UpdateVersion.Tests
                 var context = new CommandContext(_console, Verbosity.Info);
                 context.Directory = fs.RootPath;
 
-                command.Execute(context);
+                await command.ExecuteAsync(context);
                 var project = store.Read(PathHelper.GetFile(fs, "src/Services/project1.csproj"));
 
                 Assert.Equal("1.5.2", project.Version);

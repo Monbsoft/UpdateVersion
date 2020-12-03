@@ -3,6 +3,7 @@ using Monbsoft.UpdateVersion.Core;
 using Monbsoft.UpdateVersion.Models;
 using Monbsoft.UpdateVersion.Tests.Utilities;
 using System;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Monbsoft.UpdateVersion.Tests
@@ -17,7 +18,7 @@ namespace Monbsoft.UpdateVersion.Tests
         }
 
         [Fact]
-        public void ChangeVersionTest()
+        public async Task ChangeVersionTest()
         {
             using (var fs = new DisposableFileSystem())
             {
@@ -29,7 +30,7 @@ namespace Monbsoft.UpdateVersion.Tests
                 var context = new CommandContext(_console, Verbosity.Info);
                 context.Directory = fs.RootPath;
 
-                command.Execute(context, "3.0.1");
+                await command.ExecuteAsync(context, "3.0.1");
                 var project = store.Read(PathHelper.GetFile(fs, "src/Services/project1.csproj"));
 
                 Assert.Equal("3.0.1", project.Version);
@@ -38,7 +39,7 @@ namespace Monbsoft.UpdateVersion.Tests
         }
 
         [Fact]
-        public void ChangeVersionsTest()
+        public async Task ChangeVersionsTest()
         {
             using (var fs = new DisposableFileSystem())
             {
@@ -52,7 +53,7 @@ namespace Monbsoft.UpdateVersion.Tests
                 var context = new CommandContext(_console, Verbosity.Info);
                 context.Directory = fs.RootPath;
 
-                command.Execute(context, "4.0.12");
+                await command.ExecuteAsync(context, "4.0.12");
                 var project1 = store.Read(PathHelper.GetFile(fs, "src/Services/project1/project1.csproj"));
                 var project2 = store.Read(PathHelper.GetFile(fs, "src/Services/project2/project2.csproj"));
 
@@ -63,7 +64,7 @@ namespace Monbsoft.UpdateVersion.Tests
         }
 
         [Fact]
-        public void ChangeNullVersionTest()
+        public async Task ChangeNullVersionTest()
         {
             using (var fs = new DisposableFileSystem())
             {
@@ -77,7 +78,7 @@ namespace Monbsoft.UpdateVersion.Tests
                 var context = new CommandContext(_console, Verbosity.Info);
                 context.Directory = fs.RootPath;
 
-                var exception = Assert.Throws<ArgumentNullException>(() => command.Execute(context, null));
+                var exception = await Assert.ThrowsAsync<ArgumentNullException>(() => command.ExecuteAsync(context, null));
 
                 Assert.Equal("version", exception.ParamName);
 

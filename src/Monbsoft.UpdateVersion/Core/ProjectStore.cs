@@ -14,9 +14,8 @@ namespace Monbsoft.UpdateVersion.Core
         public Project Read(IFileInfo projectFile)
         {
             if (projectFile == null)
-            {
                 throw new ArgumentNullException(nameof(projectFile));
-            }
+
             var project = new Project(projectFile);
 
             var projectDocument = ReadProject(projectFile);
@@ -37,6 +36,9 @@ namespace Monbsoft.UpdateVersion.Core
 
         public void Save(Project project)
         {
+            if (project == null)
+                throw new ArgumentNullException(nameof(project));
+
             var projectDocument = ReadProject(project.File);
             var versionElement = ReadVersionElement(projectDocument);
 
@@ -73,16 +75,6 @@ namespace Monbsoft.UpdateVersion.Core
         }
 
         /// <summary>
-        /// Reads the xml version element if it exists.
-        /// </summary>
-        /// <param name="projectDocument"></param>
-        /// <returns></returns>
-        private XElement ReadVersionElement(XDocument projectDocument)
-        {
-            return projectDocument.XPathSelectElements("//Version").FirstOrDefault();
-        }
-
-        /// <summary>
         /// Reads the project file as XML
         /// </summary>
         /// <param name="fileInfo"></param>
@@ -90,6 +82,15 @@ namespace Monbsoft.UpdateVersion.Core
         private XDocument ReadProject(IFileInfo fileInfo)
         {
             return XDocument.Load(fileInfo.PhysicalPath, LoadOptions.PreserveWhitespace);
+        }
+        /// <summary>
+        /// Reads the xml version element if it exists.
+        /// </summary>
+        /// <param name="projectDocument"></param>
+        /// <returns></returns>
+        private XElement ReadVersionElement(XDocument projectDocument)
+        {
+            return projectDocument.XPathSelectElements("//Version").FirstOrDefault();
         }
     }
 }

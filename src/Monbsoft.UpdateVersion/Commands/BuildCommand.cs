@@ -22,7 +22,7 @@ namespace Monbsoft.UpdateVersion.Commands
                 {
                     Directory = Directory.GetCurrentDirectory()
                 };
-                var command = new PatchCommand();
+                var command = new BuildCommand();
                 command.Execute(context);
             });
 
