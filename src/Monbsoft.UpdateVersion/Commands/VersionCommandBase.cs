@@ -8,6 +8,7 @@ namespace Monbsoft.UpdateVersion.Commands
 {
     public class VersionCommandArguments
     {
+        public string Message { get; set;  }
         public IConsole Console { get; set; } = default;
         public Verbosity Verbosity { get; set; } = Verbosity.Info;
     }
@@ -19,6 +20,22 @@ namespace Monbsoft.UpdateVersion.Commands
         public VersionCommandBase()
         {
             _store = new ProjectStore();
+        }
+
+        protected static Command CreateCommand(string name, string description)
+        {
+            var command = new Command(name, description)
+            {
+                new Option("--message", "Message of the git commit")
+                {
+                    Argument = new Argument<string>
+                    {
+                        Name = "message",
+                    }
+                }
+
+            };
+            return command;
         }
 
         protected int Update(CommandContext context, Func<SemVersion, SemVersion> changeVersion)

@@ -16,7 +16,7 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>  
     <PackageProjectUrl>https://github.com/Monbsoft/UpdateVersion</PackageProjectUrl>  
     <RepositoryUrl>https://github.com/Monbsoft/UpdateVersion</RepositoryUrl>  
-    <PackageTags>update, version, tool, set, update-version, Semantic Versioning, semver</PackageTags>      
+    <PackageTags>versioning, csproj-tooling, tool, dotnet-cli, update, semver</PackageTags>      
   </PropertyGroup>
 
   <ItemGroup>

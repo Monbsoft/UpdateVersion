@@ -9,6 +9,20 @@ namespace Monbsoft.UpdateVersion.Core
 {
     public static class GitUtils
     {
+
+        public static async Task<bool> Commit(string message)
+        {
+            try
+            {
+                var result = await Process.ExecuteAsync("git", $"commit -am \"{message}\"");
+                return result == 0;
+            }
+            catch(Exception)
+            {
+                return false;
+            }
+        }
+
         public static async Task<bool> IsInstalled(string workingDir)
         {
             try
