@@ -14,7 +14,7 @@ namespace Monbsoft.UpdateVersion.Commands
         {
             var command = new Command("set", "Sets the version of the projects.");
 
-            var versionArg = new Argument("vesion");
+            var versionArg = new Argument("version");
             versionArg.Description = "Version of the projects";
             command.AddArgument(versionArg);
 
