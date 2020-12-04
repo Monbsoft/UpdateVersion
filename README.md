@@ -1,6 +1,6 @@
 # UpdateVersion
 
-Update-Version is a developper tool to update the .Net project versions.
+UpdateVersion is a developper tool to update the .Net project versions.
 
 ## Installing UpdateVersion
 
@@ -35,12 +35,12 @@ Commands:
 
 ## Usage
 
-### Major version update
+### Major version update with git commit
 
 Update major versions via the following command:
 
 ```text
-$ UpdateVersion major
+$ update-version major  --message "Change version"
 ```
 
 ## Credit

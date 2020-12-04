@@ -13,7 +13,7 @@ namespace Monbsoft.UpdateVersion.Commands
     {
         public static Command Create()
         {
-            var command = CreateCommand("set", "Sets the version of the projects.");
+            var command = CreateCommand("set", "Set the version of the projects.");
 
             var versionArg = new Argument("version");
             versionArg.Description = "Version of the projects";

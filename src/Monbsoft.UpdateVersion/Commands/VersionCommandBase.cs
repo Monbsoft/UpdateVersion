@@ -9,7 +9,7 @@ namespace Monbsoft.UpdateVersion.Commands
 {
     public class VersionCommandArguments
     {
-        public string Message { get; set;  }
+        public string Message { get; set; }
         public IConsole Console { get; set; } = default;
         public Verbosity Verbosity { get; set; } = Verbosity.Info;
     }
@@ -28,14 +28,13 @@ namespace Monbsoft.UpdateVersion.Commands
             var command = new Command(name, description)
             {
                 new Option(new string[]{"--message", "-m" }, "Message of the git commit")
-                {                    
+                {
                     Argument = new Argument<string>{  Name = "message" }
                 },
                 new Option(new string[]{"-v", "--verbosity"}, "Level of the verbosity")
                 {
                     Argument = new Argument<Verbosity> { Name = "level" }
                 }
-
             };
             return command;
         }

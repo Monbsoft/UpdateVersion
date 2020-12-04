@@ -10,7 +10,6 @@ namespace Monbsoft.UpdateVersion.Commands
     {
         public static Command Create()
         {
-            //var command = new Command("patch", "Increments patch version number");
             var command = CreateCommand("patch", "Increment patch version number");
             
             command.Handler = CommandHandler.Create<VersionCommandArguments>(async args =>
