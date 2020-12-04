@@ -22,19 +22,23 @@ namespace Monbsoft.UpdateVersion.Core
                 return false;
             }
         }
+
         /// <summary>
-        /// Runs the git command.
+        /// Runs git command
         /// </summary>
+        /// <param name="context"></param>
         /// <param name="args"></param>
         /// <returns></returns>
-        public static async Task<bool> RunCommandAsync(string args)
+        public static async Task<bool> RunCommandAsync(CommandContext context, string args)
         {
+            context.WriteDebug($"Running git {args}...");
+
             if (string.IsNullOrEmpty(args))
                 throw new ArgumentNullException(nameof(args));
 
             try
             {
-                var result = await Process.ExecuteAsync("git", args);
+                var result = await Process.ExecuteAsync("git", args, workingDir: context.Directory);
                 return result == 0;
             }
             catch (Exception)

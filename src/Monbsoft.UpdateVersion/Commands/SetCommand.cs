@@ -13,7 +13,7 @@ namespace Monbsoft.UpdateVersion.Commands
     {
         public static Command Create()
         {
-            var command = new Command("set", "Sets the version of the projects.");
+            var command = CreateCommand("set", "Sets the version of the projects.");
 
             var versionArg = new Argument("version");
             versionArg.Description = "Version of the projects";
@@ -23,7 +23,9 @@ namespace Monbsoft.UpdateVersion.Commands
             {
                 var context = new CommandContext(args.Console, args.Verbosity)
                 {
-                    Directory = Directory.GetCurrentDirectory()
+                    Directory = Directory.GetCurrentDirectory(),
+                    Message = args.Message,
+                    Verbosity = args.Verbosity
                 };
                 var command = new SetCommand();
                 await command.ExecuteAsync(context, args.Version);
@@ -53,6 +55,7 @@ namespace Monbsoft.UpdateVersion.Commands
         public class SetCommandArguments
         {
             public IConsole Console { get; set; } = default;
+            public string Message { get; set; }
             public Verbosity Verbosity { get; set; } = Verbosity.Info;
             public string Version { get; set; }
         }

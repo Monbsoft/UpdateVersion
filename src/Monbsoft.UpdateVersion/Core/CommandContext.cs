@@ -39,5 +39,10 @@ namespace Monbsoft.UpdateVersion.Core
         {
             WriteLine(Verbosity.Info, message);
         }
+
+        public void WriteWarning(string message)
+        {
+            WriteLine(Verbosity.Warn, message);
+        }
     }
 }

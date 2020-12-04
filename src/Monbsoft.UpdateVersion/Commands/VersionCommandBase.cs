@@ -27,27 +27,28 @@ namespace Monbsoft.UpdateVersion.Commands
         {
             var command = new Command(name, description)
             {
-                new Option("--message", "Message of the git commit")
+                new Option(new string[]{"--message", "-m" }, "Message of the git commit")
+                {                    
+                    Argument = new Argument<string>{  Name = "message" }
+                },
+                new Option(new string[]{"-v", "--verbosity"}, "Level of the verbosity")
                 {
-                    Argument = new Argument<string>
-                    {
-                        Name = "message",
-                    }
+                    Argument = new Argument<Verbosity> { Name = "level" }
                 }
 
             };
             return command;
         }
 
-        protected async Task CommitAsync(string message)
+        protected async Task<bool> CommitAsync(CommandContext context)
         {
-            if (string.IsNullOrEmpty(message))
-                return;
+            if (string.IsNullOrEmpty(context.Message))
+                return false;
 
             if (!await GitUtils.IsInstalled())
                 throw new InvalidOperationException("Unable to commit because git is not installed.");
 
-            await GitUtils.RunCommandAsync($"commit -am \"{message}\"");
+            return await GitUtils.RunCommandAsync(context, $"commit -a -m \"{context.Message}\"");
         }
 
         /// <summary>
@@ -58,6 +59,7 @@ namespace Monbsoft.UpdateVersion.Commands
         /// <returns></returns>
         protected async Task<int> UpdateAsync(CommandContext context, Func<SemVersion, SemVersion> changeVersion)
         {
+            context.WriteDebug("Updating versions...");
             var finder = new ProjectFinder(context.Directory);
             var projectFiles = finder.FindProjects();
             foreach (var projectFile in projectFiles)
@@ -67,8 +69,14 @@ namespace Monbsoft.UpdateVersion.Commands
                 _store.Save(project);
             }
 
-            await CommitAsync(context.Message);
+            bool result = await CommitAsync(context);
+            if (!result)
+            {
+                context.WriteWarning("Failed to commit.");
+                return projectFiles.Count;
+            }
 
+            context.WriteInfo($"Commit \"{context.Message}\" is created.");
             return projectFiles.Count;
         }
 

@@ -10,13 +10,15 @@ namespace Monbsoft.UpdateVersion.Commands
     {
         public static Command Create()
         {
-            var command = new Command("minor", "Increments minor version number");
+            var command = CreateCommand("minor", "Increment minor version number");
 
             command.Handler = CommandHandler.Create<VersionCommandArguments>(async args =>
             {
                 var context = new CommandContext(args.Console, args.Verbosity)
                 {
-                    Directory = Directory.GetCurrentDirectory()
+                    Directory = Directory.GetCurrentDirectory(),
+                    Message = args.Message,
+                    Verbosity = args.Verbosity
                 };
                 var command = new MinorCommand();
                 await command.ExecuteAsync(context);
