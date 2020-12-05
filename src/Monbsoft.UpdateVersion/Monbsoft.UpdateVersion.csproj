@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFrameworks>net5.0;netcoreapp3.1</TargetFrameworks>
     <RootNamespace>Monbsoft.UpdateVersion</RootNamespace>
     <AssemblyName>update-version</AssemblyName>
     <Version>0.2.0</Version>    
