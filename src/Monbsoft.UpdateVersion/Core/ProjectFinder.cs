@@ -16,9 +16,7 @@ namespace Monbsoft.UpdateVersion.Core
         {
             _currentFolder = new DirectoryInfo(folderPath);
             if(!_currentFolder.Exists)
-            {
                 throw new DirectoryNotFoundException(_currentFolder.Name);
-            }
         }
 
         public List<IFileInfo> FindProjects()
@@ -46,14 +44,11 @@ namespace Monbsoft.UpdateVersion.Core
             var files = _currentFolder.GetFiles(SolutionFormat);
 
             if (files.Length > 1)
-            {
                 throw new FileNotFoundException("More solution files are found.");
-            }
+            
             if (files.Length == 0)
-            {
                 return false;
-            }
-
+            
             return true;
         }
 

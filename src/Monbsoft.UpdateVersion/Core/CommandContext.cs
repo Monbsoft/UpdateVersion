@@ -19,6 +19,9 @@ namespace Monbsoft.UpdateVersion.Core
 
         public IConsole Console { get; set; }
         public string Directory { get; set; }
+        public string Message { get; set; }
+        public string NewVesion { get; set; }
+        public bool Tag { get; set; }
         public Verbosity Verbosity { get; set; }
 
         public void WriteLine(Verbosity verbosity, string message)
@@ -37,6 +40,11 @@ namespace Monbsoft.UpdateVersion.Core
         public void WriteInfo(string message)
         {
             WriteLine(Verbosity.Info, message);
+        }
+
+        public void WriteWarning(string message)
+        {
+            WriteLine(Verbosity.Warn, message);
         }
     }
 }

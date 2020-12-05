@@ -12,6 +12,12 @@ namespace Monbsoft.UpdateVersion.Commands
 {
     public class BuildCommand : VersionCommandBase
     {
+        public BuildCommand(IGitService gitService)
+            : base(gitService)
+        {
+
+        }
+
         public static Command Create()
         {
             var command = new Command("build", "Increment build version number");
@@ -22,7 +28,7 @@ namespace Monbsoft.UpdateVersion.Commands
                 {
                     Directory = Directory.GetCurrentDirectory()
                 };
-                var command = new PatchCommand();
+                var command = new BuildCommand(new GitService());
                 command.Execute(context);
             });
 

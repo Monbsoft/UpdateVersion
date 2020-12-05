@@ -2,31 +2,40 @@
 using System.CommandLine;
 using System.CommandLine.Invocation;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace Monbsoft.UpdateVersion.Commands
 {
     public class MinorCommand : VersionCommandBase
     {
+        public MinorCommand(IGitService gitService)
+            : base(gitService)
+        {
+
+        }
+
         public static Command Create()
         {
-            var command = new Command("minor", "Increments minor version number");
+            var command = CreateCommand("minor", "Increment minor version number");
 
-            command.Handler = CommandHandler.Create<VersionCommandArguments>(args =>
+            command.Handler = CommandHandler.Create<VersionCommandArguments>(async args =>
             {
                 var context = new CommandContext(args.Console, args.Verbosity)
                 {
-                    Directory = Directory.GetCurrentDirectory()
+                    Directory = Directory.GetCurrentDirectory(),
+                    Message = args.Message,
+                    Verbosity = args.Verbosity
                 };
-                var command = new MinorCommand();
-                command.Execute(context);
+                var command = new MinorCommand(new GitService());
+                await command.ExecuteAsync(context);
             });
 
             return command;
         }
 
-        public void Execute(CommandContext context)
+        public async Task ExecuteAsync(CommandContext context)
         {
-            int count = Update(context, (oldVersion) =>
+            int count = await UpdateAsync(context, (oldVersion) =>
             {
                 return oldVersion.Change(minor: oldVersion.Minor + 1, patch: 0);
             });

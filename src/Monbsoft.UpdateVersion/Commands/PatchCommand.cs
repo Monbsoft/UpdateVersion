@@ -2,31 +2,33 @@
 using System.CommandLine;
 using System.CommandLine.Invocation;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace Monbsoft.UpdateVersion.Commands
 {
     public class PatchCommand : VersionCommandBase
     {
+        public PatchCommand(IGitService gitService)
+            : base(gitService)
+        {
+
+        }
         public static Command Create()
         {
-            var command = new Command("patch", "Increments patch version number");
-
-            command.Handler = CommandHandler.Create<VersionCommandArguments>(args =>
+            var command = CreateCommand("patch", "Increment patch version number");
+            
+            command.Handler = CommandHandler.Create<VersionCommandArguments>(async args =>
             {
-                var context = new CommandContext(args.Console, args.Verbosity)
-                {
-                    Directory = Directory.GetCurrentDirectory()
-                };
-                var command = new PatchCommand();
-                command.Execute(context);
+                var command = new PatchCommand(new GitService());
+                await command.ExecuteAsync(CreateCommandContext(args));
             });
 
             return command;
         }
 
-        public void Execute(CommandContext context)
+        public async Task ExecuteAsync(CommandContext context)
         {
-            int count = Update(context, (oldVersion) =>
+            int count = await UpdateAsync(context, (oldVersion) =>
             {
                 return oldVersion.Change(patch: oldVersion.Patch + 1);
             });
