@@ -17,6 +17,8 @@ namespace Monbsoft.UpdateVersion.Tests.Utilities
             var mock = new Mock<IGitService>();
             mock.Setup(git => git.IsInstalled())
                 .Returns(Task.FromResult(installed));
+            mock.Setup(git => git.RunCommandAsync(It.IsAny<CommandContext>(), It.IsAny<string>()))
+                .Returns(Task.FromResult(true));
 
             return mock;
         }
