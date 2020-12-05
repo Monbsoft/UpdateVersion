@@ -20,6 +20,8 @@ namespace Monbsoft.UpdateVersion.Core
         public IConsole Console { get; set; }
         public string Directory { get; set; }
         public string Message { get; set; }
+        public string NewVesion { get; set; }
+        public bool Tag { get; set; }
         public Verbosity Verbosity { get; set; }
 
         public void WriteLine(Verbosity verbosity, string message)

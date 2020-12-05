@@ -4,13 +4,13 @@ using System.Threading.Tasks;
 
 namespace Monbsoft.UpdateVersion.Core
 {
-    public static class GitUtils
+    public class GitService : IGitService
     {
         /// <summary>
         /// Determines if git is installed.
         /// </summary>
         /// <returns></returns>
-        public static async Task<bool> IsInstalled()
+        public async Task<bool> IsInstalled()
         {
             try
             {
@@ -29,7 +29,7 @@ namespace Monbsoft.UpdateVersion.Core
         /// <param name="context"></param>
         /// <param name="args"></param>
         /// <returns></returns>
-        public static async Task<bool> RunCommandAsync(CommandContext context, string args)
+        public async Task<bool> RunCommandAsync(CommandContext context, string args)
         {
             context.WriteDebug($"Running git {args}...");
 

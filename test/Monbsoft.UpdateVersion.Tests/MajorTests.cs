@@ -25,7 +25,7 @@ namespace Monbsoft.UpdateVersion.Tests
                 fs.CreateFolder("src/Services");
                 fs.CreateFile("src/Services/project1.csproj", ProjectHelper.BuildVersion("1.5.1"));
                 var store = new ProjectStore();
-                var command = new MajorCommand();
+                var command = new MajorCommand(GitHelper.CreateDefaultGitMock().Object);
                 var context = new CommandContext(_console, Verbosity.Info);
                 context.Directory = fs.RootPath;
 

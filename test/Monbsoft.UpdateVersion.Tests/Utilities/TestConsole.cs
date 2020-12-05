@@ -3,6 +3,7 @@ using System.CommandLine.IO;
 using System.IO;
 using System.Text;
 
+#nullable enable
 namespace Monbsoft.UpdateVersion.Tests.Utilities
 {
     public class TestConsole : IConsole

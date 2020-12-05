@@ -26,7 +26,7 @@ namespace Monbsoft.UpdateVersion.Tests
                 fs.CreateFolder("src/Services");
                 fs.CreateFile("src/Services/project1.csproj", ProjectHelper.BuildVersion("1.5.1"));
                 var store = new ProjectStore();
-                var command = new SetCommand();
+                var command = new SetCommand(GitHelper.CreateDefaultGitMock().Object);
                 var context = new CommandContext(_console, Verbosity.Info);
                 context.Directory = fs.RootPath;
 
@@ -49,7 +49,7 @@ namespace Monbsoft.UpdateVersion.Tests
                     .CreateFolder("src/Services/project2")
                     .CreateFile("src/Services/project2/project2.csproj", ProjectHelper.BuildVersion("2.1.0"));
                 var store = new ProjectStore();
-                var command = new SetCommand();
+                var command = new SetCommand(GitHelper.CreateDefaultGitMock().Object);
                 var context = new CommandContext(_console, Verbosity.Info);
                 context.Directory = fs.RootPath;
 
@@ -74,7 +74,7 @@ namespace Monbsoft.UpdateVersion.Tests
                     .CreateFolder("src/Services/project2")
                     .CreateFile("src/Services/project2/project2.csproj", ProjectHelper.BuildVersion("2.1.0"));
                 var store = new ProjectStore();
-                var command = new SetCommand();
+                var command = new SetCommand(GitHelper.CreateDefaultGitMock().Object);
                 var context = new CommandContext(_console, Verbosity.Info);
                 context.Directory = fs.RootPath;
 

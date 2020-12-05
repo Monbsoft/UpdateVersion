@@ -8,20 +8,19 @@ namespace Monbsoft.UpdateVersion.Commands
 {
     public class PatchCommand : VersionCommandBase
     {
+        public PatchCommand(IGitService gitService)
+            : base(gitService)
+        {
+
+        }
         public static Command Create()
         {
             var command = CreateCommand("patch", "Increment patch version number");
             
             command.Handler = CommandHandler.Create<VersionCommandArguments>(async args =>
             {
-                var context = new CommandContext(args.Console, args.Verbosity)
-                {
-                    Directory = Directory.GetCurrentDirectory(),
-                    Message = args.Message,
-                    Verbosity = args.Verbosity
-                };
-                var command = new PatchCommand();
-                await command.ExecuteAsync(context);
+                var command = new PatchCommand(new GitService());
+                await command.ExecuteAsync(CreateCommandContext(args));
             });
 
             return command;

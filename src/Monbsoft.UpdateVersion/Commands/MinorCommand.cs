@@ -8,6 +8,12 @@ namespace Monbsoft.UpdateVersion.Commands
 {
     public class MinorCommand : VersionCommandBase
     {
+        public MinorCommand(IGitService gitService)
+            : base(gitService)
+        {
+
+        }
+
         public static Command Create()
         {
             var command = CreateCommand("minor", "Increment minor version number");
@@ -20,7 +26,7 @@ namespace Monbsoft.UpdateVersion.Commands
                     Message = args.Message,
                     Verbosity = args.Verbosity
                 };
-                var command = new MinorCommand();
+                var command = new MinorCommand(new GitService());
                 await command.ExecuteAsync(context);
             });
 

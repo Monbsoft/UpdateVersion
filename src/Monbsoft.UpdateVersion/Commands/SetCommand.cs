@@ -11,6 +11,11 @@ namespace Monbsoft.UpdateVersion.Commands
 {
     public class SetCommand : VersionCommandBase
     {
+        public SetCommand(IGitService gitService)
+            : base(gitService)
+        {
+        }
+
         public static Command Create()
         {
             var command = CreateCommand("set", "Set the version of the projects.");
@@ -27,7 +32,7 @@ namespace Monbsoft.UpdateVersion.Commands
                     Message = args.Message,
                     Verbosity = args.Verbosity
                 };
-                var command = new SetCommand();
+                var command = new SetCommand(new GitService());
                 await command.ExecuteAsync(context, args.Version);
             });
 
@@ -56,6 +61,7 @@ namespace Monbsoft.UpdateVersion.Commands
         {
             public IConsole Console { get; set; } = default;
             public string Message { get; set; }
+            public bool Tag { get; set; }
             public Verbosity Verbosity { get; set; } = Verbosity.Info;
             public string Version { get; set; }
         }
