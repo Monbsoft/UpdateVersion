@@ -16,7 +16,7 @@ namespace Monbsoft.UpdateVersion
         {
             var command = new RootCommand()
             {
-                Description = "Developper tool to update the Visual Studio project versions."
+                Description = "Developer tool to update the Visual Studio project versions."
             };
             command.AddCommand(ListCommand.Create());
             command.AddCommand(MajorCommand.Create());
