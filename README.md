@@ -1,6 +1,6 @@
 # UpdateVersion
 
-Update-Version is a developper tool to update the .Net project versions.
+Update-Version is a developer tool to update the .NET project versions.
 
 ## Installing UpdateVersion
 
@@ -16,7 +16,7 @@ Run `UpdateVersion --help` for information about usage.
 
 ```text
 UpdateVersion:
-  Developper tool to update the Visual Studio project versions.
+  Developer tool to update the Visual Studio project versions.
 
 Usage:
   UpdateVersion [options] [command]
