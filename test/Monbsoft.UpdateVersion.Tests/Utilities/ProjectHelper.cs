@@ -19,7 +19,7 @@ namespace Monbsoft.UpdateVersion.Tests.Utilities
   </ItemGroup>
 </Project>";
 
-        public static string BuildVersion(string version)
+        public static string SetVersion(string version)
         {
             return string.Format(ProjectTemplate, $"<Version>{version}</Version>");
         }

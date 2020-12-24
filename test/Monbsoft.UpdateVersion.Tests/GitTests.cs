@@ -25,7 +25,7 @@ namespace Monbsoft.UpdateVersion.Tests
             {
                 fs.CreateFile("MySolution.sln");
                 fs.CreateFolder("src/Services");
-                fs.CreateFile("src/Services/project1.csproj", ProjectHelper.BuildVersion("1.5.1"));
+                fs.CreateFile("src/Services/project1.csproj", ProjectHelper.SetVersion("1.5.1"));
                 var store = new ProjectStore();
                 var command = new MajorCommand(GitHelper.CreateDefaultGitMock().Object);
                 var context = new CommandContext(_console, Verbosity.Info);
@@ -45,7 +45,7 @@ namespace Monbsoft.UpdateVersion.Tests
             {
                 fs.CreateFile("MySolution.sln");
                 fs.CreateFolder("src/Services");
-                fs.CreateFile("src/Services/project1.csproj", ProjectHelper.BuildVersion("1.5.1"));
+                fs.CreateFile("src/Services/project1.csproj", ProjectHelper.SetVersion("1.5.1"));
                 var store = new ProjectStore();
                 var gitMock = GitHelper.CreateGitMock(true);
 
@@ -70,7 +70,7 @@ namespace Monbsoft.UpdateVersion.Tests
             {
                 fs.CreateFile("MySolution.sln");
                 fs.CreateFolder("src/Services");
-                fs.CreateFile("src/Services/project1.csproj", ProjectHelper.BuildVersion("1.5.1"));
+                fs.CreateFile("src/Services/project1.csproj", ProjectHelper.SetVersion("1.5.1"));
                 var store = new ProjectStore();
                 var gitMock = GitHelper.CreateGitMock(true);
 
@@ -93,7 +93,7 @@ namespace Monbsoft.UpdateVersion.Tests
             {
                 fs.CreateFile("MySolution.sln");
                 fs.CreateFolder("src/Services");
-                fs.CreateFile("src/Services/project1.csproj", ProjectHelper.BuildVersion("1.5.1"));
+                fs.CreateFile("src/Services/project1.csproj", ProjectHelper.SetVersion("1.5.1"));
                 var store = new ProjectStore();
                 var gitMock = GitHelper.CreateGitMock(true);
                

@@ -17,7 +17,7 @@ namespace Monbsoft.UpdateVersion.Tests
             string projectFile = "project2.csproj";
             using (var fs = new DisposableFileSystem())
             {
-                fs.CreateFile(projectFile, ProjectHelper.BuildVersion(string.Empty));
+                fs.CreateFile(projectFile, ProjectHelper.SetVersion(string.Empty));
                 var store = new ProjectStore();
 
                 var project = store.Read(CreateFileInfo(fs, projectFile));
@@ -32,7 +32,7 @@ namespace Monbsoft.UpdateVersion.Tests
             string projectFile = "project1.csproj";
             using (var fs = new DisposableFileSystem())
             {
-                fs.CreateFile(projectFile, ProjectHelper.BuildVersion("0.5"));
+                fs.CreateFile(projectFile, ProjectHelper.SetVersion("0.5"));
                 var store = new ProjectStore();
 
                 var project = store.Read(CreateFileInfo(fs, projectFile));
@@ -47,7 +47,7 @@ namespace Monbsoft.UpdateVersion.Tests
             string projectFile = "MyProject.csproj";
             using (var fs = new DisposableFileSystem())
             {
-                fs.CreateFile(projectFile, ProjectHelper.BuildVersion("1.3.5"));
+                fs.CreateFile(projectFile, ProjectHelper.SetVersion("1.3.5"));
                 var store = new ProjectStore();
 
                 var project = store.Read(CreateFileInfo(fs, projectFile));
@@ -63,7 +63,7 @@ namespace Monbsoft.UpdateVersion.Tests
 
             using (var fs = new DisposableFileSystem())
             {
-                fs.CreateFile(projectFile, ProjectHelper.BuildVersion("1.4.0"));
+                fs.CreateFile(projectFile, ProjectHelper.SetVersion("1.4.0"));
                 var store = new ProjectStore();
                 var project = store.Read(CreateFileInfo(fs, projectFile));
                 project.Version = "2.0";
@@ -82,7 +82,7 @@ namespace Monbsoft.UpdateVersion.Tests
 
             using (var fs = new DisposableFileSystem())
             {
-                fs.CreateFile(projectFile, ProjectHelper.BuildVersion("1.4.0"));
+                fs.CreateFile(projectFile, ProjectHelper.SetVersion("1.4.0"));
                 var store = new ProjectStore();
                 var project = store.Read(CreateFileInfo(fs, projectFile));
                 project.Version = "${BuildVersion}";

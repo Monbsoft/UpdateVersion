@@ -20,14 +20,8 @@ namespace Monbsoft.UpdateVersion.Commands
 
             command.Handler = CommandHandler.Create<VersionCommandArguments>(async args =>
             {
-                var context = new CommandContext(args.Console, args.Verbosity)
-                {
-                    Directory = Directory.GetCurrentDirectory(),
-                    Message = args.Message,
-                    Verbosity = args.Verbosity
-                };
                 var command = new MinorCommand(new GitService());
-                await command.ExecuteAsync(context);
+                await command.ExecuteAsync(CreateCommandContext(args));
             });
 
             return command;
