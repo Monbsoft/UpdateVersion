@@ -33,6 +33,7 @@ namespace Monbsoft.UpdateVersion.Commands
 
         public async Task ExecuteAsync(CommandContext context)
         {
+            context.WriteDebug("Updating pre-release versions...");
             int count = await UpdateAsync(context, (oldVersion) =>
             {
                 if (string.IsNullOrEmpty(oldVersion.Prerelease))
@@ -49,7 +50,7 @@ namespace Monbsoft.UpdateVersion.Commands
                 split[last] = preVersion.ToString();
                 return oldVersion.Change(prerelease: string.Join('.', split));
             });
-            context.WriteInfo($"{count} pre-release versions are updated.");
+            context.WriteInfo($"{count} pre-release versions updated.");
         }
     }
 }

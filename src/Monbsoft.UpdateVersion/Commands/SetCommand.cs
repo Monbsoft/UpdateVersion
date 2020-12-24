@@ -46,6 +46,8 @@ namespace Monbsoft.UpdateVersion.Commands
         /// <param name="version"></param>
         public async Task ExecuteAsync(CommandContext context, string version)
         {
+            context.WriteDebug("Setting versions.");
+
             if (string.IsNullOrEmpty(version))
                 throw new ArgumentNullException(nameof(version));
 
@@ -54,7 +56,7 @@ namespace Monbsoft.UpdateVersion.Commands
             {
                 return newVersion;
             });
-            context.WriteInfo($"{count} versions are updated.");
+            context.WriteInfo($"{count} versions set.");
         }
 
         public class SetCommandArguments

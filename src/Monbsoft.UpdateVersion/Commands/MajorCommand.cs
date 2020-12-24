@@ -32,7 +32,7 @@ namespace Monbsoft.UpdateVersion.Commands
             {
                 return oldVersion.Change(major: oldVersion.Major + 1, 0, 0);
             });
-            context.WriteInfo($"{count} major versions are updated.");
+            context.WriteInfo($"{count} major versions updated.");
         }
     }
 }

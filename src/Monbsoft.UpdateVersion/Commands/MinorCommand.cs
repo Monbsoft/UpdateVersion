@@ -33,7 +33,7 @@ namespace Monbsoft.UpdateVersion.Commands
             {
                 return oldVersion.Change(minor: oldVersion.Minor + 1, patch: 0);
             });
-            context.WriteInfo($"{count} minor versions are updated.");
+            context.WriteInfo($"{count} minor versions updated.");
         }
     }
 }

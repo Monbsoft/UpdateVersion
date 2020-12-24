@@ -3,9 +3,6 @@ using Monbsoft.UpdateVersion.Core;
 using Monbsoft.UpdateVersion.Models;
 using Monbsoft.UpdateVersion.Tests.Utilities;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 

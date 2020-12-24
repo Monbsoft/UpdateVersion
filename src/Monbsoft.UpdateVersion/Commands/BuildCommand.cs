@@ -33,6 +33,7 @@ namespace Monbsoft.UpdateVersion.Commands
 
         public async Task ExecuteAsync(CommandContext context)
         {
+            context.WriteDebug("Updating build versions...");
             int count = await UpdateAsync(context, (oldVersion) =>
             {
                 if (string.IsNullOrEmpty(oldVersion.Build))
@@ -49,7 +50,7 @@ namespace Monbsoft.UpdateVersion.Commands
                 split[last] = buildVersion.ToString();
                 return oldVersion.Change(build: string.Join('.', split));
             });
-            context.WriteInfo($"{count} build versions are updated.");
+            context.WriteInfo($"{count} build versions updated.");
         }
     }
 }
