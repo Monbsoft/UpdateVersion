@@ -61,7 +61,7 @@ namespace Monbsoft.UpdateVersion.Commands
                 throw new InvalidOperationException("Unable to commit because git is not installed.");
 
             if (context.Add)
-                await _gitService.RunCommandAsync(context, $"add --all");
+                await _gitService.RunCommandAsync(context, "add --all");
 
             return await _gitService.RunCommandAsync(context, $"commit -a -m \"{context.Message}\"");
         }

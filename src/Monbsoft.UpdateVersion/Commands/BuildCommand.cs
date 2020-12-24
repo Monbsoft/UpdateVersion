@@ -22,21 +22,38 @@ namespace Monbsoft.UpdateVersion.Commands
         {
             var command = new Command("build", "Increment build version number");
 
-            command.Handler = CommandHandler.Create<VersionCommandArguments>(args =>
+            command.Handler = CommandHandler.Create<VersionCommandArguments>(async args =>
             {
                 var context = new CommandContext(args.Console, args.Verbosity)
                 {
                     Directory = Directory.GetCurrentDirectory()
                 };
                 var command = new BuildCommand(new GitService());
-                command.Execute(context);
+                await command.ExecuteAsync(context);
             });
 
             return command;
         }
 
-        public void Execute(CommandContext context)
+        public async Task ExecuteAsync(CommandContext context)
         {
+            int count = await UpdateAsync(context, (oldVersion) =>
+            {
+                if (string.IsNullOrEmpty(oldVersion.Build))
+                    throw new ArgumentNullException("Build");
+
+                string[] split = oldVersion.Build.Split('.');
+                int last = split.Length - 1;
+
+                if (!int.TryParse(split[last], out int buildVersion))
+                {
+                    throw new FormatException($"{oldVersion.Build} is not in the correct format.");
+                }
+                buildVersion++;
+                split[last] = buildVersion.ToString();
+                return oldVersion.Change(build: string.Join('.', split));
+            });
+            context.WriteInfo($"{count} build versions are updated.");
         }
     }
 }

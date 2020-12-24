@@ -22,7 +22,7 @@ namespace Monbsoft.UpdateVersion
             command.AddCommand(MajorCommand.Create());
             command.AddCommand(MinorCommand.Create());
             command.AddCommand(PatchCommand.Create());
-            //command.AddCommand(BuildCommand.Create());
+            command.AddCommand(BuildCommand.Create());
             command.AddCommand(SetCommand.Create());
             
 

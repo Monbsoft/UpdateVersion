@@ -20,46 +20,78 @@ namespace Monbsoft.UpdateVersion.Tests
             _console = new TestConsole();
         }
 
-        //[Fact]
-        //public void ChangeBuildVersionTest()
-        //{
-        //    using (var fs = new DisposableFileSystem())
-        //    {
-        //        fs.CreateFile("MySolution.sln");
-        //        fs.CreateFolder("src/Services");
-        //        fs.CreateFile("src/Services/project1.csproj", ProjectHelper.BuildVersion("3.63.4"));
-        //        var store = new ProjectStore();
-        //        var command = new BuildCommand();
-        //        var context = new CommandContext(_console, Verbosity.Info);
-        //        context.Directory = fs.RootPath;
+        [Fact]
+        public async Task ChangeBuildVersionTest()
+        {
+            using (var fs = new DisposableFileSystem())
+            {
+                fs.CreateFile("MySolution.sln");
+                fs.CreateFolder("src/Services");
+                fs.CreateFile("src/Services/project1.csproj", ProjectHelper.BuildVersion("1.15.0-alpha+9"));
+                var store = new ProjectStore();
+                var command = new BuildCommand(GitHelper.CreateDefaultGitMock().Object);
+                var context = new CommandContext(_console, Verbosity.Info);
+                context.Directory = fs.RootPath;
 
-        //        command.Execute(context);
-        //        var project = store.Read(PathHelper.GetFile(fs, "src/Services/project1.csproj"));
+                await command.ExecuteAsync(context);
+                var project = store.Read(PathHelper.GetFile(fs, "src/Services/project1.csproj"));
 
-        //        Assert.Equal("3.63.4+1", project.Version);
+                Assert.Equal("1.15.0-alpha+10", project.Version);
 
-        //    }
-        //}
+            }
+        }
 
-        //[Fact]
-        //public void ChangeExistingBuildVersionTest()
-        //{
-        //    using (var fs = new DisposableFileSystem())
-        //    {
-        //        fs.CreateFile("MySolution.sln");
-        //        fs.CreateFolder("src/Services");
-        //        fs.CreateFile("src/Services/project1.csproj", ProjectHelper.BuildVersion("5.0.8"));
-        //        var store = new ProjectStore();
-        //        var command = new BuildCommand();
-        //        var context = new CommandContext(_console, Verbosity.Info);
-        //        context.Directory = fs.RootPath;
+        [Fact]
+        public async Task ChangeBuildWithBadFormatTest()
+        {
+            using (var fs = new DisposableFileSystem())
+            {
+                fs.CreateFile("MySolution.sln");
+                fs.CreateFolder("src/Services");
+                fs.CreateFile("src/Services/project1.csproj", ProjectHelper.BuildVersion("5.0.8+15f"));
+                var store = new ProjectStore();
+                var command = new BuildCommand(GitHelper.CreateDefaultGitMock().Object);
+                var context = new CommandContext(_console, Verbosity.Info);
+                context.Directory = fs.RootPath;
 
-        //        command.Execute(context);
-        //        var project = store.Read(PathHelper.GetFile(fs, "src/Services/project1.csproj"));
+                await Assert.ThrowsAsync<FormatException>(() => command.ExecuteAsync(context));
+            }
+        }
+        [Fact]
+        public async Task ChangeWithComplexBuildVersionTest()
+        {
+            using (var fs = new DisposableFileSystem())
+            {
+                fs.CreateFile("MySolution.sln");
+                fs.CreateFolder("src/Services");
+                fs.CreateFile("src/Services/project1.csproj", ProjectHelper.BuildVersion("1.15.0-alpha+2020.119"));
+                var store = new ProjectStore();
+                var command = new BuildCommand(GitHelper.CreateDefaultGitMock().Object);
+                var context = new CommandContext(_console, Verbosity.Info);
+                context.Directory = fs.RootPath;
 
-        //        Assert.Equal("5.0.8+15", project.Version);
+                await command.ExecuteAsync(context);
+                var project = store.Read(PathHelper.GetFile(fs, "src/Services/project1.csproj"));
 
-        //    }
-        //}
+                Assert.Equal("1.15.0-alpha+2020.120", project.Version);
+
+            }
+        }
+        [Fact]
+        public async Task ChangeWithNoBuildVersionTest()
+        {
+            using (var fs = new DisposableFileSystem())
+            {
+                fs.CreateFile("MySolution.sln");
+                fs.CreateFolder("src/Services");
+                fs.CreateFile("src/Services/project1.csproj", ProjectHelper.BuildVersion("5.0.8"));
+                var store = new ProjectStore();
+                var command = new BuildCommand(GitHelper.CreateDefaultGitMock().Object);
+                var context = new CommandContext(_console, Verbosity.Info);
+                context.Directory = fs.RootPath;
+
+                await Assert.ThrowsAsync<ArgumentNullException>(() => command.ExecuteAsync(context));
+            }
+        }
     }
 }
