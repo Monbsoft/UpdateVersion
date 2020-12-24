@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace Monbsoft.UpdateVersion.Commands
 {
-    public class BuildCommand : VersionCommandBase
+    public class PreCommand : VersionCommandBase
     {
-        public BuildCommand(IGitService gitService)
+        public PreCommand(IGitService gitService)
             : base(gitService)
         {
 
@@ -20,11 +20,11 @@ namespace Monbsoft.UpdateVersion.Commands
 
         public static Command Create()
         {
-            var command = CreateCommand("build", "Increment build version number");
+            var command = CreateCommand("pre", "Increment pre-release version number");
 
             command.Handler = CommandHandler.Create<VersionCommandArguments>(async args =>
             {
-                var command = new BuildCommand(new GitService());
+                var command = new PreCommand(new GitService());
                 await command.ExecuteAsync(CreateCommandContext(args));
             });
 
@@ -35,21 +35,21 @@ namespace Monbsoft.UpdateVersion.Commands
         {
             int count = await UpdateAsync(context, (oldVersion) =>
             {
-                if (string.IsNullOrEmpty(oldVersion.Build))
-                    throw new ArgumentNullException("Build");
+                if (string.IsNullOrEmpty(oldVersion.Prerelease))
+                    throw new ArgumentNullException("Pre-release");
 
-                string[] split = oldVersion.Build.Split('.');
+                string[] split = oldVersion.Prerelease.Split('.');
                 int last = split.Length - 1;
 
-                if (!int.TryParse(split[last], out int buildVersion))
+                if (!int.TryParse(split[last], out int preVersion))
                 {
-                    throw new FormatException($"{oldVersion.Build} is not in the correct format.");
+                    throw new FormatException($"{oldVersion.Prerelease} is not in the pre-release correct format.");
                 }
-                buildVersion++;
-                split[last] = buildVersion.ToString();
-                return oldVersion.Change(build: string.Join('.', split));
+                preVersion++;
+                split[last] = preVersion.ToString();
+                return oldVersion.Change(prerelease: string.Join('.', split));
             });
-            context.WriteInfo($"{count} build versions are updated.");
+            context.WriteInfo($"{count} pre-release versions are updated.");
         }
     }
 }

@@ -26,11 +26,13 @@ Options:
   --version         Show version information
 
 Commands:
-  list            Lists all project versions
-  major           Increments major version number
-  minor           Increments minor version number
-  patch           Increments patch version number
-  set <vesion>    Sets the version of the projects.
+  list             Lists all project versions
+  major            Increment major version number
+  minor            Increment minor version number
+  patch            Increment patch version number
+  build            Increment build version number
+  pre              Increment pre-release version number
+  set <version>    Set the version of the projects.
 ```
 
 ## Usage
@@ -66,6 +68,7 @@ Git options via the following command:
 ```text
 Options:
   -m, --message <message>                    Message of the git commit
+  -a, --add                                  All files in the entire working tree
   -t, --tag                                  Tag of the git commit
 ```
 

@@ -24,7 +24,7 @@ namespace Monbsoft.UpdateVersion.Tests
             {
                 fs.CreateFile("MySolution.sln");
                 fs.CreateFolder("src/Services");
-                fs.CreateFile("src/Services/project1.csproj", ProjectHelper.BuildVersion("1.5.1"));
+                fs.CreateFile("src/Services/project1.csproj", ProjectHelper.SetVersion("1.5.1"));
                 var store = new ProjectStore();
                 var command = new SetCommand(GitHelper.CreateDefaultGitMock().Object);
                 var context = new CommandContext(_console, Verbosity.Info);
@@ -45,9 +45,9 @@ namespace Monbsoft.UpdateVersion.Tests
             {
                 fs.CreateFile("MySolution.sln")
                     .CreateFolder("src/Services/project1")
-                    .CreateFile("src/Services/project1/project1.csproj", ProjectHelper.BuildVersion("1.5.1"))
+                    .CreateFile("src/Services/project1/project1.csproj", ProjectHelper.SetVersion("1.5.1"))
                     .CreateFolder("src/Services/project2")
-                    .CreateFile("src/Services/project2/project2.csproj", ProjectHelper.BuildVersion("2.1.0"));
+                    .CreateFile("src/Services/project2/project2.csproj", ProjectHelper.SetVersion("2.1.0"));
                 var store = new ProjectStore();
                 var command = new SetCommand(GitHelper.CreateDefaultGitMock().Object);
                 var context = new CommandContext(_console, Verbosity.Info);
@@ -70,9 +70,9 @@ namespace Monbsoft.UpdateVersion.Tests
             {
                 fs.CreateFile("MySolution.sln")
                     .CreateFolder("src/Services/project1")
-                    .CreateFile("src/Services/project1/project1.csproj", ProjectHelper.BuildVersion("1.5.1"))
+                    .CreateFile("src/Services/project1/project1.csproj", ProjectHelper.SetVersion("1.5.1"))
                     .CreateFolder("src/Services/project2")
-                    .CreateFile("src/Services/project2/project2.csproj", ProjectHelper.BuildVersion("2.1.0"));
+                    .CreateFile("src/Services/project2/project2.csproj", ProjectHelper.SetVersion("2.1.0"));
                 var store = new ProjectStore();
                 var command = new SetCommand(GitHelper.CreateDefaultGitMock().Object);
                 var context = new CommandContext(_console, Verbosity.Info);

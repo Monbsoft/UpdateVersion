@@ -17,6 +17,7 @@ namespace Monbsoft.UpdateVersion.Core
             Verbosity = verbosity;
         }
 
+        public bool Add { get; set; }
         public IConsole Console { get; set; }
         public string Directory { get; set; }
         public string Message { get; set; }

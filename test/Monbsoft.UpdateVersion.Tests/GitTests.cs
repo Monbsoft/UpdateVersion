@@ -25,7 +25,7 @@ namespace Monbsoft.UpdateVersion.Tests
             {
                 fs.CreateFile("MySolution.sln");
                 fs.CreateFolder("src/Services");
-                fs.CreateFile("src/Services/project1.csproj", ProjectHelper.BuildVersion("1.5.1"));
+                fs.CreateFile("src/Services/project1.csproj", ProjectHelper.SetVersion("1.5.1"));
                 var store = new ProjectStore();
                 var command = new MajorCommand(GitHelper.CreateDefaultGitMock().Object);
                 var context = new CommandContext(_console, Verbosity.Info);
@@ -39,13 +39,38 @@ namespace Monbsoft.UpdateVersion.Tests
         }
 
         [Fact]
+        public async Task AddFileTest()
+        {
+            using (var fs = new DisposableFileSystem())
+            {
+                fs.CreateFile("MySolution.sln");
+                fs.CreateFolder("src/Services");
+                fs.CreateFile("src/Services/project1.csproj", ProjectHelper.SetVersion("1.5.1"));
+                var store = new ProjectStore();
+                var gitMock = GitHelper.CreateGitMock(true);
+
+                var command = new PatchCommand(gitMock.Object);
+                var context = new CommandContext(_console, Verbosity.Info);
+                context.Add = true;
+                context.Directory = fs.RootPath;
+                context.Message = "test";
+
+                await command.ExecuteAsync(context);
+
+                gitMock.Verify(git => git.IsInstalled());
+                gitMock.Verify(git => git.RunCommandAsync(It.IsAny<CommandContext>(), It.Is<string>(args => args.Equals("add --all"))));
+                gitMock.Verify(git => git.RunCommandAsync(It.IsAny<CommandContext>(), It.Is<string>(args => args.Equals("commit -a -m \"test\""))));
+            }
+        }
+
+        [Fact]
         public async Task AddTagTest()
         {
             using (var fs = new DisposableFileSystem())
             {
                 fs.CreateFile("MySolution.sln");
                 fs.CreateFolder("src/Services");
-                fs.CreateFile("src/Services/project1.csproj", ProjectHelper.BuildVersion("1.5.1"));
+                fs.CreateFile("src/Services/project1.csproj", ProjectHelper.SetVersion("1.5.1"));
                 var store = new ProjectStore();
                 var gitMock = GitHelper.CreateGitMock(true);
 
@@ -68,7 +93,7 @@ namespace Monbsoft.UpdateVersion.Tests
             {
                 fs.CreateFile("MySolution.sln");
                 fs.CreateFolder("src/Services");
-                fs.CreateFile("src/Services/project1.csproj", ProjectHelper.BuildVersion("1.5.1"));
+                fs.CreateFile("src/Services/project1.csproj", ProjectHelper.SetVersion("1.5.1"));
                 var store = new ProjectStore();
                 var gitMock = GitHelper.CreateGitMock(true);
                

@@ -10,6 +10,7 @@ namespace Monbsoft.UpdateVersion.Commands
 {
     public class VersionCommandArguments
     {
+        public bool Add { get; set; }
         public string Message { get; set; }
         public bool Tag { get; set; }
         public IConsole Console { get; set; } = default;
@@ -35,6 +36,7 @@ namespace Monbsoft.UpdateVersion.Commands
                 {
                     Argument = new Argument<string>{  Name = "message" }
                 },
+                new Option(new string[]{"--add", "-a"}, "All files in the entire working tree"),
                 new Option(new string[]{"--tag", "-t" }, "Tag of the git commit"),
                 new Option(new string[]{"-v", "--verbosity"}, "Level of the verbosity")
                 {
@@ -58,6 +60,9 @@ namespace Monbsoft.UpdateVersion.Commands
             if (!await _gitService.IsInstalled())
                 throw new InvalidOperationException("Unable to commit because git is not installed.");
 
+            if (context.Add)
+                await _gitService.RunCommandAsync(context, "add --all");
+
             return await _gitService.RunCommandAsync(context, $"commit -a -m \"{context.Message}\"");
         }
 
@@ -65,6 +70,7 @@ namespace Monbsoft.UpdateVersion.Commands
         {
             return new CommandContext(args.Console, args.Verbosity)
             {
+                Add = args.Add,
                 Directory = Directory.GetCurrentDirectory(),
                 Message = args.Message,
                 Tag = args.Tag,

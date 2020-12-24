@@ -37,7 +37,7 @@ namespace Monbsoft.UpdateVersion.Tests
                     .CreateFile("project2.csproj");
                 var finder = new ProjectFinder(fs.RootPath);
 
-                var projects = finder.FindProjects();
+                var projects = finder.FindProjects().OrderBy(p => p.Name).ToArray();
 
                 Assert.Equal("project1.csproj", projects[0].Name);
                 Assert.Equal("project2.csproj", projects[1].Name);

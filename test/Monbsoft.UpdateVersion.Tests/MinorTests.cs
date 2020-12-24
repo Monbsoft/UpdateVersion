@@ -24,7 +24,7 @@ namespace Monbsoft.UpdateVersion.Tests
             {
                 fs.CreateFile("MySolution.sln");
                 fs.CreateFolder("src/Services");
-                fs.CreateFile("src/Services/project1.csproj", ProjectHelper.BuildVersion("1.5.1"));
+                fs.CreateFile("src/Services/project1.csproj", ProjectHelper.SetVersion("1.5.1"));
                 var store = new ProjectStore();
                 var gitMock = new Mock<IGitService>();
                 var command = new MinorCommand(GitHelper.CreateDefaultGitMock().Object);
