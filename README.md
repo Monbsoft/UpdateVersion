@@ -1,5 +1,9 @@
 # update-version
 
+![GitHub](https://img.shields.io/github/license/Monbsoft/UpdateVersion)
+![Build](https://github.com/Monbsoft/UpdateVersion/workflows/Build/badge.svg)
+![Nuget](https://img.shields.io/nuget/v/Monbsoft.UpdateVersion)
+
 update-version is a developer tool to update the .NET project versions.
 
 ## Setup update-version
