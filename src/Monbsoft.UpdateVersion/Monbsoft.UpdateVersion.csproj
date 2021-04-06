@@ -5,8 +5,8 @@
     <TargetFrameworks>net5.0;netcoreapp3.1</TargetFrameworks>
     <RootNamespace>Monbsoft.UpdateVersion</RootNamespace>
     <AssemblyName>update-version</AssemblyName>
-    <Version>1.0.1</Version>    
-    <PackageId>Monbsoft.UpdateVersion</PackageId>
+    <Version>1.0.2</Version>    
+    <PackageId>monbsoft.updateversion</PackageId>
     <IsPackable>true</IsPackable>
     <PackAsTool>true</PackAsTool>  
     <ToolCommandName>update-version</ToolCommandName>  
